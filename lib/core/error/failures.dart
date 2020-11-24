@@ -8,3 +8,8 @@ class ServerFailure extends Failure {
   @override
   List<Object> get props => const <dynamic>[];
 }
+
+class InvalidInputFailure extends Failure {
+  @override
+  List<Object> get props => const <dynamic>[];
+}

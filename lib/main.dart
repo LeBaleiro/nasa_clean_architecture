@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
                 firstDate: DateTime(1995, 06, 16),
                 lastDate: DateTime.now(),
               );
-              print(datePicked);
             }),
       ),
     );
