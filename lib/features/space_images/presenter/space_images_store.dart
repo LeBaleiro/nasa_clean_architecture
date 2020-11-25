@@ -1,0 +1,34 @@
+import 'package:mobx/mobx.dart';
+import 'package:nasa_clean_arch/core/error/failures.dart';
+import 'package:nasa_clean_arch/core/utils/date_input_converter.dart';
+import 'package:nasa_clean_arch/features/space_images/domain/entities/space_media.dart';
+import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_date.dart';
+import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_today.dart';
+part 'space_images_store.g.dart';
+
+class SpaceImagesStore = _SpaceImagesStoreBase with _$SpaceImagesStore;
+
+abstract class _SpaceImagesStoreBase with Store {
+  final GetSpaceMediaFromDate spaceMediaFromDate;
+  final GetSpaceMediaFromToday spaceMediaFromToday;
+  final DateInputConverter dateInputConverter;
+
+  _SpaceImagesStoreBase({
+    this.spaceMediaFromDate,
+    this.spaceMediaFromToday,
+    this.dateInputConverter,
+  });
+
+  @observable
+  SpaceMedia spaceMedia;
+
+  @observable
+  Failure error;
+
+  @action
+  Future<void> getSpaceImageFromDate(DateTime date) async {
+    final dateIntoString = dateInputConverter.format(date);
+    final result = await spaceMediaFromDate(dateIntoString);
+    //result.fold((l) => error, (r) => spaceMedia);
+  }
+}
