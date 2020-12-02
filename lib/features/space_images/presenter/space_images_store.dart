@@ -29,6 +29,12 @@ abstract class _SpaceImagesStoreBase with Store {
   Future<void> getSpaceImageFromDate(DateTime date) async {
     final dateIntoString = dateInputConverter.format(date);
     final result = await spaceMediaFromDate(dateIntoString);
-    //result.fold((l) => error, (r) => spaceMedia);
+    result.fold((l) => error = l, (r) => spaceMedia = r);
+  }
+
+    @action
+  Future<void> getSpaceImageFromToday() async {
+    final result = await spaceMediaFromToday();
+    result.fold((l) => error = l, (r) => spaceMedia = r);
   }
 }
