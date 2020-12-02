@@ -32,7 +32,7 @@ abstract class _SpaceImagesStoreBase with Store {
     result.fold((l) => error = l, (r) => spaceMedia = r);
   }
 
-    @action
+  @action
   Future<void> getSpaceImageFromToday() async {
     final result = await spaceMediaFromToday();
     result.fold((l) => error = l, (r) => spaceMedia = r);

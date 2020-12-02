@@ -6,7 +6,7 @@ import 'package:nasa_clean_arch/core/utils/date_input_converter.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/entities/space_media.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_date.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_today.dart';
-import 'package:nasa_clean_arch/features/space_images/presenter/space_images_store.dart';
+import 'package:nasa_clean_arch/features/space_images/presenter/space_images_controller.dart';
 
 class MockGetSpaceMediaFromToday extends Mock
     implements GetSpaceMediaFromToday {}

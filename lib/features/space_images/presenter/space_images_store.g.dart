@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'space_images_store.dart';
+part of 'space_images_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
