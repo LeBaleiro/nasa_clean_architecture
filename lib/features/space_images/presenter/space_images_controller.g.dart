@@ -8,8 +8,8 @@ part of 'space_images_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$SpaceImagesStore on _SpaceImagesStoreBase, Store {
-  final _$spaceMediaAtom = Atom(name: '_SpaceImagesStoreBase.spaceMedia');
+mixin _$SpaceImagesController on _SpaceImagesControllerBase, Store {
+  final _$spaceMediaAtom = Atom(name: '_SpaceImagesControllerBase.spaceMedia');
 
   @override
   SpaceMedia get spaceMedia {
@@ -24,7 +24,7 @@ mixin _$SpaceImagesStore on _SpaceImagesStoreBase, Store {
     });
   }
 
-  final _$errorAtom = Atom(name: '_SpaceImagesStoreBase.error');
+  final _$errorAtom = Atom(name: '_SpaceImagesControllerBase.error');
 
   @override
   Failure get error {
@@ -40,12 +40,21 @@ mixin _$SpaceImagesStore on _SpaceImagesStoreBase, Store {
   }
 
   final _$getSpaceImageFromDateAsyncAction =
-      AsyncAction('_SpaceImagesStoreBase.getSpaceImageFromDate');
+      AsyncAction('_SpaceImagesControllerBase.getSpaceImageFromDate');
 
   @override
   Future<void> getSpaceImageFromDate(DateTime date) {
     return _$getSpaceImageFromDateAsyncAction
         .run(() => super.getSpaceImageFromDate(date));
+  }
+
+  final _$getSpaceImageFromTodayAsyncAction =
+      AsyncAction('_SpaceImagesControllerBase.getSpaceImageFromToday');
+
+  @override
+  Future<void> getSpaceImageFromToday() {
+    return _$getSpaceImageFromTodayAsyncAction
+        .run(() => super.getSpaceImageFromToday());
   }
 
   @override

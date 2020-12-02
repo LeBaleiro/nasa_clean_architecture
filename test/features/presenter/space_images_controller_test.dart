@@ -16,7 +16,7 @@ class MockGetSpaceMediaFromDate extends Mock implements GetSpaceMediaFromDate {}
 class MockDateInputConverter extends Mock implements DateInputConverter {}
 
 void main() {
-  SpaceImagesStore store;
+  SpaceImagesController store;
   MockGetSpaceMediaFromDate mockGetSpaceMediaFromDate;
   MockGetSpaceMediaFromToday mockGetSpaceMediaFromToday;
   MockDateInputConverter mockDateInputConverter;
@@ -25,7 +25,7 @@ void main() {
     mockGetSpaceMediaFromDate = MockGetSpaceMediaFromDate();
     mockGetSpaceMediaFromToday = MockGetSpaceMediaFromToday();
     mockDateInputConverter = MockDateInputConverter();
-    store = SpaceImagesStore(
+    store = SpaceImagesController(
       spaceMediaFromDate: mockGetSpaceMediaFromDate,
       spaceMediaFromToday: mockGetSpaceMediaFromToday,
       dateInputConverter: mockDateInputConverter,
