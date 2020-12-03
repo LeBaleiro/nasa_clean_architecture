@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
     return Observer(builder: (context) {
       return Scaffold(
         body: SafeArea(
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
                   child: Center(child: Text("Selecionar data")),
@@ -24,12 +25,14 @@ class HomePage extends StatelessWidget {
                       firstDate: DateTime(1995, 06, 16),
                       lastDate: DateTime.now(),
                     );
-                  }),
-              GestureDetector(
-                  child: Center(child: Text("Buscar")),
-                  onTap: () async {
                     await controller.getSpaceImageFromDate(datePicked);
-                    print(controller.spaceMedia.title);
+                    Modular.to.pushNamed('/picture');
+                  }),
+              Text('ou'),
+              GestureDetector(
+                  child: Center(child: Text("Veja a imagem de hoje")),
+                  onTap: () async {
+                    await controller.getSpaceImageFromToday();
                     Modular.to.pushNamed('/picture');
                   }),
             ],
