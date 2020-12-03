@@ -3,23 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:nasa_clean_arch/features/space_images/presenter/space_images_controller.dart';
+import 'package:nasa_clean_arch/features/space_images/presenter/widgets/round_button.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Modular.get<SpaceImagesController>();
-    DateTime datePicked;
     return Observer(builder: (context) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text('APOD'),
+          backgroundColor: Colors.blueGrey,
+        ),
         body: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                  child: Center(child: Text("Selecionar data")),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text(
+                  "Welcome to Astronomy Picture of the Day!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(
+                  height: 150,
+                ),
+                RoundButton(
+                  label: "Select datetime",
                   onTap: () async {
-                    datePicked = await showDatePicker(
-                      helpText: "Escolha uma data",
+                    var datePicked = await showDatePicker(
+                      helpText: "Select a datetime",
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1995, 06, 16),
@@ -27,15 +43,19 @@ class HomePage extends StatelessWidget {
                     );
                     await controller.getSpaceImageFromDate(datePicked);
                     Modular.to.pushNamed('/picture');
-                  }),
-              Text('ou'),
-              GestureDetector(
-                  child: Center(child: Text("Veja a imagem de hoje")),
-                  onTap: () async {
-                    await controller.getSpaceImageFromToday();
-                    Modular.to.pushNamed('/picture');
-                  }),
-            ],
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                RoundButton(
+                    label: "See today's image",
+                    onTap: () async {
+                      await controller.getSpaceImageFromToday();
+                      Modular.to.pushNamed('/picture');
+                    }),
+              ],
+            ),
           ),
         ),
       );
