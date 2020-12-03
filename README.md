@@ -1,3 +1,3 @@
 # nasa_clean_architecture
 
-A new Flutter project.
+A Flutter project using Modular, Mobx and Clean Architecture.
