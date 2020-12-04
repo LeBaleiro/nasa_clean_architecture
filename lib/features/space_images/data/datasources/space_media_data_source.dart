@@ -1,27 +1,34 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/keys/api_keys.dart';
+import '../../../../core/utils/date_input_converter.dart';
 import '../models/space_media_model.dart';
 import 'endpoints/endpoints.dart';
 
 abstract class SpaceMediaDataSource {
-  Future<SpaceMediaModel> getSpaceMediaFromDate(String date);
+  Future<SpaceMediaModel> getSpaceMediaFromDate(DateTime date);
 
   Future<SpaceMediaModel> getSpaceMediaFromToday();
 }
 
 class SpaceMediaDataSourceImpl implements SpaceMediaDataSource {
   final http.Client client;
+  final DateInputConverter dateInputConverter;
 
-  SpaceMediaDataSourceImpl(this.client);
+  SpaceMediaDataSourceImpl({
+    @required this.client,
+    @required this.dateInputConverter,
+  });
 
   @override
-  Future<SpaceMediaModel> getSpaceMediaFromDate(String date) async {
+  Future<SpaceMediaModel> getSpaceMediaFromDate(DateTime date) async {
+    final dateConverted = dateInputConverter.format(date);
     return _getSpaceMediaFromUrl(
-        NasaEndpoints.getSpaceMediaFromDate(ApiKeys.apiKey, date));
+        NasaEndpoints.getSpaceMediaFromDate(ApiKeys.apiKey, dateConverted));
   }
 
   @override

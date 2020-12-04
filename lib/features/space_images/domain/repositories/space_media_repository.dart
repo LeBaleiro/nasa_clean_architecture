@@ -5,5 +5,5 @@ import '../entities/space_media.dart';
 
 abstract class SpaceMediaRepository {
   Future<Either<Failure, SpaceMedia>> getSpaceMediaFromToday();
-  Future<Either<Failure, SpaceMedia>> getSpaceMediaFromDate(String date);
+  Future<Either<Failure, SpaceMedia>> getSpaceMediaFromDate(DateTime date);
 }

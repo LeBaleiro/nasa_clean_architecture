@@ -18,7 +18,7 @@ void main() {
     repository = SpaceMediaRepositoryImpl(mockSpaceMediaDataSource);
   });
   final tSpaceMediaModel = SpaceMediaModel(
-    datePublished: "2020-10-22",
+    datePublished: "2020-11-01",
     description: "test description",
     mediaType: "image",
     title: "test title",
@@ -52,28 +52,28 @@ void main() {
     });
   });
   group('getSpaceMediaFromDate', () {
-    final tDate = "2020-10-22";
+    final tDateTime = DateTime(2020, 11, 01);
     test(
         'should return remote data when the call to remote data source is sucessful',
         () async {
-      when(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDate))
+      when(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDateTime))
           .thenAnswer((_) async => tSpaceMediaModel);
 
-      final result = await repository.getSpaceMediaFromDate(tDate);
+      final result = await repository.getSpaceMediaFromDate(tDateTime);
 
-      verify(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDate));
+      verify(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDateTime));
       expect(result, equals(Right(tSpaceMediaModel)));
     });
 
     test(
         'should return server failure when the call to remote data is unsucessful',
         () async {
-      when(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDate))
+      when(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDateTime))
           .thenThrow(ServerException());
 
-      final result = await repository.getSpaceMediaFromDate(tDate);
+      final result = await repository.getSpaceMediaFromDate(tDateTime);
 
-      verify(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDate));
+      verify(mockSpaceMediaDataSource.getSpaceMediaFromDate(tDateTime));
       expect(result, equals(Left(ServerFailure())));
     });
   });

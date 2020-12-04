@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:nasa_clean_arch/core/error/failures.dart';
-import 'package:nasa_clean_arch/core/utils/date_input_converter.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/entities/space_media.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_date.dart';
 import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_today.dart';
@@ -13,26 +12,21 @@ class MockGetSpaceMediaFromToday extends Mock
 
 class MockGetSpaceMediaFromDate extends Mock implements GetSpaceMediaFromDate {}
 
-class MockDateInputConverter extends Mock implements DateInputConverter {}
 
 void main() {
   SpaceImagesController store;
   MockGetSpaceMediaFromDate mockGetSpaceMediaFromDate;
   MockGetSpaceMediaFromToday mockGetSpaceMediaFromToday;
-  MockDateInputConverter mockDateInputConverter;
+
 
   setUp(() {
     mockGetSpaceMediaFromDate = MockGetSpaceMediaFromDate();
     mockGetSpaceMediaFromToday = MockGetSpaceMediaFromToday();
-    mockDateInputConverter = MockDateInputConverter();
     store = SpaceImagesController(
       spaceMediaFromDate: mockGetSpaceMediaFromDate,
       spaceMediaFromToday: mockGetSpaceMediaFromToday,
-      dateInputConverter: mockDateInputConverter,
     );
   });
-
-  final tDateTimeString = '2020-11-01';
 
   final tDateTime = DateTime(2020, 11, 01);
 
@@ -45,30 +39,17 @@ void main() {
         "https://apod.nasa.gov/apod/image/2011/spacex-crew-1-JenScottPhotography-11_1050.jpg",
   );
   group('getSpaceMediaFromDate', () {
-    test(
-        'should call DateInputConverter to convert the data into a formatted string',
-        () async {
-      when(mockDateInputConverter.format(any)).thenReturn(tDateTimeString);
-      when(mockGetSpaceMediaFromDate(any))
-          .thenAnswer((_) async => Right(tSpaceMedia));
-
-      await store.getSpaceImageFromDate(tDateTime);
-
-      verify(mockDateInputConverter.format(tDateTime));
-    });
     test('should return a SpaceMedia from the usecase', () async {
-      when(mockDateInputConverter.format(any)).thenReturn(tDateTimeString);
       when(mockGetSpaceMediaFromDate(any))
           .thenAnswer((_) async => Right(tSpaceMedia));
 
       await store.getSpaceImageFromDate(tDateTime);
 
-      verify(mockGetSpaceMediaFromDate(tDateTimeString));
+      verify(mockGetSpaceMediaFromDate(tDateTime));
       expect(store.spaceMedia, tSpaceMedia);
     });
     test('should return a Failure from the usecase when there is an error',
         () async {
-      when(mockDateInputConverter.format(any)).thenReturn(tDateTimeString);
       when(mockGetSpaceMediaFromDate(any))
           .thenAnswer((_) async => Left(ServerFailure()));
 

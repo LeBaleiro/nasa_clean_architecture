@@ -1,16 +1,16 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
-import 'package:nasa_clean_arch/app_widget.dart';
-import 'package:nasa_clean_arch/core/utils/date_input_converter.dart';
-import 'package:nasa_clean_arch/features/space_images/data/datasources/space_media_data_source.dart';
-import 'package:nasa_clean_arch/features/space_images/data/repositories/space_media_repository_impl.dart';
-import 'package:nasa_clean_arch/features/space_images/domain/usecases/get_space_media_from_today.dart';
-import 'package:nasa_clean_arch/features/space_images/presenter/home_page.dart';
-import 'package:nasa_clean_arch/features/space_images/presenter/picture_page.dart';
-import 'package:nasa_clean_arch/features/space_images/presenter/space_images_controller.dart';
 
+import 'app_widget.dart';
+import 'core/utils/date_input_converter.dart';
+import 'features/space_images/data/datasources/space_media_data_source.dart';
+import 'features/space_images/data/repositories/space_media_repository_impl.dart';
 import 'features/space_images/domain/usecases/get_space_media_from_date.dart';
+import 'features/space_images/domain/usecases/get_space_media_from_today.dart';
+import 'features/space_images/presenter/home_page.dart';
+import 'features/space_images/presenter/picture_page.dart';
+import 'features/space_images/presenter/space_images_controller.dart';
 
 class AppModule extends MainModule {
   @override
@@ -18,12 +18,14 @@ class AppModule extends MainModule {
         Bind((i) => SpaceImagesController(
               spaceMediaFromDate: i(),
               spaceMediaFromToday: i(),
-              dateInputConverter: i(),
             )),
         Bind((i) => GetSpaceMediaFromDate(i())),
         Bind((i) => GetSpaceMediaFromToday(i())),
         Bind((i) => SpaceMediaRepositoryImpl(i())),
-        Bind((i) => SpaceMediaDataSourceImpl(i())),
+        Bind((i) => SpaceMediaDataSourceImpl(
+              client: i(),
+              dateInputConverter: i(),
+            )),
         Bind((i) => http.Client()),
         Bind((i) => DateInputConverter()),
       ];

@@ -21,7 +21,7 @@ class SpaceMediaRepositoryImpl implements SpaceMediaRepository {
   }
 
   @override
-  Future<Either<Failure, SpaceMedia>> getSpaceMediaFromDate(String date) async {
+  Future<Either<Failure, SpaceMedia>> getSpaceMediaFromDate(DateTime date) async {
     return await _getSpaceMedia(() {
       return dataSource.getSpaceMediaFromDate(date);
     });

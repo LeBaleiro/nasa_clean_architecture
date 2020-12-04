@@ -8,7 +8,7 @@ class GetSpaceMediaFromDate {
   final SpaceMediaRepository repository;
 
   GetSpaceMediaFromDate(this.repository);
-  Future<Either<Failure, SpaceMedia>> call(String date) async {
+  Future<Either<Failure, SpaceMedia>> call(DateTime date) async {
     return repository.getSpaceMediaFromDate(date);
   }
 }

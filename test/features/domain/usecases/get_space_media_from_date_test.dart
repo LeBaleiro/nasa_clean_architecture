@@ -17,7 +17,7 @@ void main() {
   });
 
   final tSpaceMedia = SpaceMedia(
-    datePublished: "2020-11-19",
+    datePublished: "2020-11-01",
     description: "test description",
     mediaType: "image",
     title: "test title",
@@ -25,14 +25,14 @@ void main() {
         "https://apod.nasa.gov/apod/image/2011/spacex-crew-1-JenScottPhotography-11_1050.jpg",
   );
 
-  final tDate = "2020-10-22";
+  final tDateTime = DateTime(2020, 11, 01);
 
   test('should get space media for a given date from the repository', () async {
     when(mockSpaceMediaRepository.getSpaceMediaFromDate(any))
         .thenAnswer((_) async => Right(tSpaceMedia));
-    final result = await usecase(tDate);
+    final result = await usecase(tDateTime);
     expect(result, Right(tSpaceMedia));
-    verify(mockSpaceMediaRepository.getSpaceMediaFromDate(tDate));
+    verify(mockSpaceMediaRepository.getSpaceMediaFromDate(tDateTime));
     verifyNoMoreInteractions(mockSpaceMediaRepository);
   });
 }
