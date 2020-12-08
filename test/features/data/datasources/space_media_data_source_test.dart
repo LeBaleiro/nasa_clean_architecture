@@ -90,7 +90,7 @@ void main() {
       sucessHttpMock();
       await dataSource.getSpaceMediaFromToday();
       verify(mockHttpClient.get(
-          "https://api.nasa.gov/planetary/apod?hd=true&api_key=${ApiKeys.apiKey}"));
+          "https://api.nasa.gov/planetary/apod?hd=true&api_key=${ApiKeys.apiKey}&date="));
     });
     test('should return SpaceMedia when the response code is 200 (success)',
         () async {

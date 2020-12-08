@@ -28,13 +28,13 @@ class SpaceMediaDataSourceImpl implements SpaceMediaDataSource {
   Future<SpaceMediaModel> getSpaceMediaFromDate(DateTime date) async {
     final dateConverted = dateInputConverter.format(date);
     return _getSpaceMediaFromUrl(
-        NasaEndpoints.getSpaceMediaFromDate(ApiKeys.apiKey, dateConverted));
+        NasaEndpoints.getSpaceMedia(ApiKeys.apiKey, dateConverted));
   }
 
   @override
   Future<SpaceMediaModel> getSpaceMediaFromToday() {
     return _getSpaceMediaFromUrl(
-        NasaEndpoints.getSpaceMediaFromToday(ApiKeys.apiKey));
+        NasaEndpoints.getSpaceMedia(ApiKeys.apiKey, ''));
   }
 
   Future<SpaceMediaModel> _getSpaceMediaFromUrl(String url) async {
