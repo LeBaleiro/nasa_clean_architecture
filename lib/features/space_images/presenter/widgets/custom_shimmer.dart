@@ -10,7 +10,10 @@ class CustomShimmer extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: Colors.grey,
       highlightColor: Colors.white,
-      child: child,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: child,
+      ),
     );
   }
 }

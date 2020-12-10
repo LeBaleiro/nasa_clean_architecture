@@ -20,19 +20,13 @@ class HomePage extends StatelessWidget {
               Text(
                 "Welcome to Astronomy Picture of the Day!",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 20,
-                  color: Color(0xFF3E4C5C),
-                ),
+                style: Theme.of(context).textTheme.caption,
               ),
               SizedBox(
                 height: 150,
               ),
               RoundButton(
                 label: "Select datetime",
-                buttonColor: Color(0xFF406FA8),
-                textColor: Colors.white,
                 onTap: () async {
                   var datePicked = await showDatePicker(
                     helpText: "Select a datetime",
@@ -49,8 +43,6 @@ class HomePage extends StatelessWidget {
                 height: 20,
               ),
               RoundButton(
-                  buttonColor: Color(0xFF406FA8),
-                  textColor: Colors.white,
                   label: "See today's image",
                   onTap: () async {
                     await controller.getSpaceImageFromToday();

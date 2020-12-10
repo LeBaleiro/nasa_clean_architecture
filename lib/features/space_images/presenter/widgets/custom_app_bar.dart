@@ -14,7 +14,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: TextStyle(color: Colors.white),
       ),
       backgroundColor: Color(0xFF233C5C),
     );

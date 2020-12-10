@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:nasa_clean_arch/features/space_images/presenter/widgets/custom_app_bar.dart';
 import 'package:nasa_clean_arch/features/space_images/presenter/widgets/custom_shimmer.dart';
 import 'package:nasa_clean_arch/features/space_images/presenter/widgets/description_bottom_sheet.dart';
+import 'package:nasa_clean_arch/features/space_images/presenter/widgets/image_network_with_loader.dart';
 
 import 'space_images_controller.dart';
 
@@ -71,32 +72,8 @@ class _PicturePageState extends State<PicturePage> {
                                       child: VideoPlayer(_videoController),
                                     )
                                   : Container()
-                              : InteractiveViewer(
-                                  minScale: 0.1,
-                                  maxScale: 4,
-                                  child: Image.network(
-                                    moduleController.spaceMedia?.mediaUrl,
-                                    fit: BoxFit.cover,
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      }
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
+                              : ImageNetworkWithLoader(
+                                  moduleController.spaceMedia?.mediaUrl,
                                 ),
                         ),
                         Positioned(
@@ -105,25 +82,18 @@ class _PicturePageState extends State<PicturePage> {
                           child: Container(
                             color: Colors.black.withOpacity(0.2),
                             child: CustomShimmer(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.keyboard_arrow_up,
-                                      size: 35,
-                                    ),
-                                    Text(
-                                      "Slide up to see the description",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.keyboard_arrow_up,
+                                    size: 35,
+                                  ),
+                                  Text(
+                                    "Slide up to see the description",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -133,10 +103,7 @@ class _PicturePageState extends State<PicturePage> {
                   : Center(
                       child: Text(
                         'An error occurred, try again later.',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 20,
-                        ),
+                        style: Theme.of(context).textTheme.caption,
                       ),
                     )),
         );

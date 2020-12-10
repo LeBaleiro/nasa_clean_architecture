@@ -17,21 +17,13 @@ void showDescriptionBottomSheet({
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 25,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 SizedBox(height: 10),
                 Text(
                   description,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 17,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
             ),
