@@ -19,8 +19,10 @@ dependencies:
   mobx: ^1.2.1+4
   flutter_mobx: ^1.1.0+2
   flutter_modular: ^2.0.1
-  extended_image: ^1.3.0
-  video_player: ^1.0.1
+  ext_video_player: ^0.0.3
+  shimmer: ^1.1.2
+  sliding_up_panel: ^1.0.2
+  zoom_widget: ^0.1.3
 
 dev_dependencies:
   flutter_test:
