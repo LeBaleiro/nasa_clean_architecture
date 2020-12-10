@@ -27,13 +27,21 @@ abstract class _SpaceImagesControllerBase with Store {
 
   @action
   Future<void> getSpaceImageFromDate(DateTime date) async {
+    _cleanVariables();
     final result = await spaceMediaFromDate(date);
     result.fold((l) => error = l, (r) => spaceMedia = r);
   }
 
   @action
   Future<void> getSpaceImageFromToday() async {
+    _cleanVariables();
     final result = await spaceMediaFromToday();
     result.fold((l) => error = l, (r) => spaceMedia = r);
+  }
+
+  @action
+  void _cleanVariables() {
+    error = null;
+    spaceMedia = null;
   }
 }

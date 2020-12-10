@@ -35,8 +35,9 @@ class _PicturePageState extends State<PicturePage> {
   @override
   void dispose() {
     super.dispose();
-    moduleController.spaceMedia?.mediaType == 'video' ??
-        _videoController.dispose();
+    if (moduleController.spaceMedia?.mediaType == 'video') {
+      _videoController.dispose();
+    }
   }
 
   @override
@@ -46,83 +47,98 @@ class _PicturePageState extends State<PicturePage> {
         return Scaffold(
           appBar: CustomAppBar(title: 'APOD'),
           body: GestureDetector(
-            onVerticalDragUpdate: (update) {
-              if (update.delta.dy < 0) {
-                showDescriptionBottomSheet(
-                  context: context,
-                  title: moduleController.spaceMedia?.title,
-                  description: moduleController.spaceMedia?.description,
-                );
-              }
-            },
-            child: Stack(
-              children: [
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: moduleController.spaceMedia?.mediaType == 'video'
-                      ? _videoController.value.initialized
-                          ? AspectRatio(
-                              aspectRatio: _videoController.value.aspectRatio,
-                              child: VideoPlayer(_videoController),
-                            )
-                          : Container()
-                      : InteractiveViewer(
-                          minScale: 0.1,
-                          maxScale: 4,
-                          child: Image.network(
-                            moduleController.spaceMedia?.mediaUrl,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
-                                      : null,
+              onVerticalDragUpdate: (update) {
+                if (update.delta.dy < 0) {
+                  showDescriptionBottomSheet(
+                    context: context,
+                    title: moduleController.spaceMedia?.title,
+                    description: moduleController.spaceMedia?.description,
+                  );
+                }
+              },
+              child: moduleController.error == null
+                  ? Stack(
+                      children: [
+                        Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          child: moduleController.spaceMedia?.mediaType ==
+                                  'video'
+                              ? _videoController.value.initialized
+                                  ? AspectRatio(
+                                      aspectRatio:
+                                          _videoController.value.aspectRatio,
+                                      child: VideoPlayer(_videoController),
+                                    )
+                                  : Container()
+                              : InteractiveViewer(
+                                  minScale: 0.1,
+                                  maxScale: 4,
+                                  child: Image.network(
+                                    moduleController.spaceMedia?.mediaUrl,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                              );
-                            },
-                          ),
                         ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                    color: Colors.black.withOpacity(0.2),
-                    child: CustomShimmer(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.keyboard_arrow_up,
-                              size: 35,
-                            ),
-                            Text(
-                              "Slide up to see the description",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                        Positioned(
+                          bottom: 0,
+                          width: MediaQuery.of(context).size.width,
+                          child: Container(
+                            color: Colors.black.withOpacity(0.2),
+                            child: CustomShimmer(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.keyboard_arrow_up,
+                                      size: 35,
+                                    ),
+                                    Text(
+                                      "Slide up to see the description",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Center(
+                      child: Text(
+                        'An error occurred, try again later.',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 20,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                    )),
         );
       },
     );
